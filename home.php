@@ -31,7 +31,30 @@ $contacts = $conn->query("SELECT * FROM contacts WHERE user_id = {$_SESSION['use
         <div class="card text-center">
           <div class="card-body">
             <h3 class="card-title text-capitalize"><?= $contact["name"] ?></h3>
-            <p class="m-2"><?= $contact["phone_number"] ?></p>
+            <p class="m-2">Phone: <?= $contact["phone_number"] ?></p>
+            
+            <?php
+            $addresses = $conn->query("SELECT * FROM addresses 
+                                        WHERE 
+                                        user_id = {$_SESSION['user']['id']} 
+                                        AND contact_id = {$contact['id']} ");
+
+            foreach ($addresses as $address): ?>
+              
+              <div class="card bg-secondary mb-3 text-left">
+                <div class="card-body p-2">
+                  <p class="m-0">
+                    <b><?= $address['name']?>:</b> <?= $address["street"] ?>
+                  </p>
+                  <div class="mt-2 text-right">
+                    <a href="editAddress.php?id=<?= $address["id"] ?>" class="btn btn-sm btn-info">Editar</a>
+                    <a href="deleteAddress.php?id=<?= $address["id"] ?>" class="btn btn-sm btn-warning">Eliminar</a>
+                  </div>
+                </div>
+              </div>
+              <?php endforeach ?>
+            <hr class="my-3">
+            
             <a href="edit.php?id=<?= $contact["id"] ?>" class="btn btn-secondary mb-2">Edit Contact</a>
             <a href="delete.php?id=<?= $contact["id"] ?>" class="btn btn-danger mb-2">Delete Contact</a>
           </div>
