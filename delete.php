@@ -27,6 +27,8 @@ if ($contact["user_id"] !== $_SESSION["user"]["id"]) {
   echo("HTTP 403 UNAUTHORIZED");
   return;
 }
+//borrar primero las dirrecciones
+$conn->prepare("DELETE FROM addresses WHERE contact_id = :id")->execute([":id" => $id]);
 
 $conn->prepare("DELETE FROM contacts WHERE id = :id")->execute([":id" => $id]);
 
