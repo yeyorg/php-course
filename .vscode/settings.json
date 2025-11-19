@@ -9,8 +9,8 @@
         "editor.tabSize": 2
     },
     "files.insertFinalNewline": true,
-    "editor.fontSize": 24,
-    "editor.lineHeight": 26,
-    "terminal.integrated.fontSize": 24,
+    "editor.fontSize": 12,
+    "editor.lineHeight": 20,
+    "terminal.integrated.fontSize": 12,
     "window.zoomLevel": 2
 }
