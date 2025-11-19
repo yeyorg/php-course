@@ -19,3 +19,14 @@ CREATE TABLE contacts (
 
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+DROP TABLE IF EXISTS addresses;
+CREATE TABLE addresses(  
+    id_address int NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',
+    user_id int NOT NULL,
+    contact_id int NOT NULL,
+    name VARCHAR(255),
+    street VARCHAR(255),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (contact_id) REFERENCES contacts(id)
+);
