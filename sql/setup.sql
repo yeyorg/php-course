@@ -22,7 +22,7 @@ CREATE TABLE contacts (
 
 DROP TABLE IF EXISTS addresses;
 CREATE TABLE addresses(  
-    id_address int NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',
+    id int NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',
     user_id int NOT NULL,
     contact_id int NOT NULL,
     name VARCHAR(255),
