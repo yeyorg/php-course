@@ -69,7 +69,7 @@
 
               <div class="col-md-6">
                 <input id="name" type="text" class="form-control" name="name" autocomplete="name" autofocus>
-                <input hidden id="contact_id" type="text" class="form-control" name="contact_id" value= <?= $_GET["id"]?>>
+                <input hidden id="contact_id" type="text" class="form-control" name="contact_id" value= <?= $_GET["contact_id"]?>>
               </div>
             </div>
 
