@@ -16,30 +16,31 @@ if (!isset($_GET["id"])) {
   return;
 }
 
-$contact_id = $_GET["id"];
-$user_id = $_SESSION['user']['id'];
+$contactId = $_GET["id"];
+$userId = $_SESSION['user']['id'];
 
 
 // Se verifica que el contacto exista Y pertenezca al usuario logueado.
-$statement_contact = $conn->prepare("SELECT * FROM contacts WHERE id = ? AND user_id = ? LIMIT 1");
-$statement_contact->execute([$contact_id, $user_id]);
-$contact = $statement_contact->fetch(PDO::FETCH_ASSOC);
+$statementContact = $conn->prepare("SELECT * FROM contacts WHERE id = ? AND user_id = ? LIMIT 1");
+$statementContact->execute([$contactId, $userId]);
+$contact = $statementContact->fetch(PDO::FETCH_ASSOC);
 
 
 // Si el contacto no existe o no pertenece al usuario, redirige
 if (!$contact) { // PDO::fetch() devuelve false si no hay resultados
+  http_response_code(404);
   echo "404: Contact not found";
   return;
 }
 
-$statement_addresses = $conn->prepare("SELECT * FROM addresses 
+$statementAddresses = $conn->prepare("SELECT * FROM addresses 
                                         WHERE 
                                         user_id = ? 
                                         AND contact_id = ? 
                                         ORDER BY name ASC");
 
-$statement_addresses->execute([$user_id, $contact_id]);
-$addresses = $statement_addresses->fetchAll(PDO::FETCH_ASSOC);
+$statementAddresses->execute([$userId, $contactId]);
+$addresses = $statementAddresses->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -52,12 +53,12 @@ $addresses = $statement_addresses->fetchAll(PDO::FETCH_ASSOC);
       <div class="card card-body">
         
         <h3 class="card-title text-center mb-4">
-          Direcciones de <?= $contact["name"] ?>
+          Addresses from <?= $contact["name"] ?>
         </h3>
 
         <div class="mb-3 text-right">
-            <a href="newAddress.php?contact_id=<?= $contact_id ?>" class="btn btn-success">
-                Nueva dirección
+            <a href="newAddress.php?contact_id=<?= $contactId ?>" class="btn btn-success">
+                New address
             </a>
         </div>
         
@@ -79,8 +80,8 @@ $addresses = $statement_addresses->fetchAll(PDO::FETCH_ASSOC);
                   </p>
                 </div>
                 <div>
-                  <a href="editAddress.php?id=<?= $address["id"] ?>" class="btn btn-sm btn-info mr-2">Editar</a>
-                  <a href="deleteAddress.php?id=<?= $address["id"] ?>" class="btn btn-sm btn-warning">Eliminar</a>
+                  <a href="editAddress.php?address_id=<?= $address["id"] ?>" class="btn btn-sm btn-info mr-2">Edit</a>
+                  <a href="deleteAddress.php?address_id=<?= $address["id"] ?>" class="btn btn-sm btn-warning">Delete</a>
                 </div>
               </li>
             <?php endforeach ?>
@@ -90,7 +91,7 @@ $addresses = $statement_addresses->fetchAll(PDO::FETCH_ASSOC);
         
         <hr class="my-3">
         
-        <a href="home.php" class="btn btn-secondary mt-2">Volver a Contactos</a>
+        <a href="home.php" class="btn btn-secondary mt-2">Back to contacts</a>
       </div>
     </div>
 
