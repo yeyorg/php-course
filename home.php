@@ -32,25 +32,31 @@ $contacts = $conn->query("SELECT * FROM contacts WHERE user_id = {$_SESSION['use
           <div class="card-body">
             <h3 class="card-title text-capitalize"><?= $contact["name"] ?></h3>
             <p class="m-2">Phone: <?= $contact["phone_number"] ?></p>
-            
-            <?php
-            $addresses = $conn->query("SELECT * FROM addresses 
-                                        WHERE 
-                                        user_id = {$_SESSION['user']['id']} 
-                                        AND contact_id = {$contact['id']} ");
-
-            foreach ($addresses as $address): ?>
-              
-              <div class="card bg-secondary mb-3 text-left">
-                <div class="card-body p-2">
-                  <p class="m-0">
-                    <b><?= $address['name']?>:</b> <?= $address["street"] ?>
-                  </p>
+            <hr class="my-2">
+            <p class="m-2">Addresses:</p>
+            <?php 
+              $addresses = $conn->query("SELECT * FROM addresses 
+                            WHERE 
+                            user_id = {$_SESSION['user']['id']} 
+                            AND contact_id = {$contact['id']} "); ?>
+            <?php if ($addresses->rowCount() == 0): ?>
+                <div class="card bg-secondary mb-3 text-left">
+                  No hay direcciones guardadas para este contacto.
                 </div>
-              </div>
-              <?php endforeach ?>
-            <hr class="my-3">
-            
+            <?php else: ?>
+              <?php
+              foreach ($addresses as $address): ?>
+
+                <div class="card bg-secondary mb-3 text-left">
+                  <div class="card-body p-2">
+                    <p class="m-0">
+                      <b><?= $address['name']?>:</b> <?= $address["street"] ?>
+                    </p>
+                  </div>
+                </div>
+                <?php endforeach ?>
+              <hr class="my-3">
+            <?php endif ?>
             <a href="edit.php?id=<?= $contact["id"] ?>" class="btn btn-secondary mb-2">Edit Contact</a>
             <a href="delete.php?id=<?= $contact["id"] ?>" class="btn btn-danger mb-2">Delete Contact</a>
             <a href="addresses.php?id=<?= $contact["id"] ?>" class="btn btn-success mb-2">Addresses</a>
