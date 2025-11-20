@@ -46,10 +46,6 @@ $contacts = $conn->query("SELECT * FROM contacts WHERE user_id = {$_SESSION['use
                   <p class="m-0">
                     <b><?= $address['name']?>:</b> <?= $address["street"] ?>
                   </p>
-                  <div class="mt-2 text-right">
-                    <a href="editAddress.php?id=<?= $address["id"] ?>" class="btn btn-sm btn-info">Editar</a>
-                    <a href="deleteAddress.php?id=<?= $address["id"] ?>" class="btn btn-sm btn-warning">Eliminar</a>
-                  </div>
                 </div>
               </div>
               <?php endforeach ?>
